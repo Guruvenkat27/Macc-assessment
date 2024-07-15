@@ -20,8 +20,8 @@ const Sucecesful = () => {
                     <h1 className='font-bold text-2xl'>Order Placed Successfully</h1>
                     <p className='text-sm text-center'>
                         Your Order Has Been Placed Successfully<br/>
-                        We&apos;ll Try to Ship it To Your Door Step As<br/>
-                        Soon As We Can. Cheers!
+                        Well Try to Ship it To Your Door Step As<br/>
+                        Soon As We Can Cheers!
                     </p>
                     <div className='mt-4 mb-4'>
                         <button className='bg-blue-800 text-white w-[20vw] h-[5vh] rounded-md' onClick={homepage}>

@@ -10,11 +10,11 @@ const Productdetails1 = () => {
   const { asin } = useParams();
   const { addToCart } = useCart();
 
-  // Memoize the retrieval of product details
+
   const products123 = useMemo(() => {
     const storedProduct = JSON.parse(localStorage.getItem("product12"));
     return storedProduct || {};
-  }, []);
+  }, []); 
 
   const [selectedImage, setSelectedImage] = useState(products123.product_photo);
   const [isAdded, setIsAdded] = useState(false);
