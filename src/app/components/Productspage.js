@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 import { useSearch } from './Searching';
-
+import Image from 'next/image';
 const Productspage = () => {
   const { fetchProducts1, fetchProducts ,loading } = useSearch();
 
@@ -69,7 +69,7 @@ const Productspage = () => {
                 <div key={item.asin} onClick={() => fetchProducts1(item.asin)}>
                   <div className='products-box flex flex-col gap-4 rounded-md items-center py-5 px-3'>
                     <div className='products-imgdiv'>
-                      <img src={item.product_photo} width={150} alt={item.product_title} />
+                      <Image src={item.product_photo} width={150} alt={item.product_title} />
                     </div>
                     <p className='overflow-hidden h-11 w-60 text-center'>{item.product_title}</p>
                   </div>

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
-
+import Image from 'next/image';
 const Checkoutbox = () => {
   const router=useRouter()
   const [customerData, setcustomerData] = useState({
@@ -126,7 +126,7 @@ router.push("/payment")
           </form>
         </div>
         <div>
-          <img src='/images/distance.png' width={520} alt="Delivery" />
+          <Image src='/images/distance.png' width={520} alt="Delivery" />
         </div>
       </div>
     </>

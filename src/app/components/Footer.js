@@ -4,13 +4,13 @@ import { FaTwitter } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa";
-
+import Image from 'next/image';
 
 const Footer = () => {
   return (
     <div>
       <div className=' flex items-start justify-between px-20 py-11 relative bottom-0'>
-<div><img src='/images/maccicon.png' width={200}/></div>
+<div><Image src='/images/maccicon.png' alt='maccicon' width={200}/></div>
 <div className='grid gap-2 '>
     <span className='text-gray-700 '>Home</span>
     <span className='text-gray-700 '>Collection</span>

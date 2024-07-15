@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSearch } from './Searching';
+import Image from 'next/image';
 
 const Bestsellerpage = () => {
 
@@ -41,7 +42,7 @@ const Bestsellerpage = () => {
                     {bestsellingdata.best_sellers.map((item) => (
                         <div key={item.asin} className='flex flex-col bestsingle items-center' onClick={() => fetchProducts2(item.asin)}>
                             <div className='h-[33vh] w-[100%]'>
-                                <img src={item.product_photo} className='w-[100%] h-[100%]' alt={item.product_title} />
+                                <Image src={item.product_photo} className='w-[100%] h-[100%]' alt={item.product_title} />
                             </div>
                             <p className="mt-4 overflow-hidden px-3 h-[7vh]">{item.product_title}</p>
                         </div>

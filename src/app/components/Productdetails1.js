@@ -1,5 +1,5 @@
 "use client";
-
+import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { useCart } from './Cartcontext';
@@ -56,7 +56,8 @@ const Productdetails1 = () => {
           {Array.isArray(products123.product_photos) && products123.product_photos.length > 0 ? (
             products123.product_photos.map((item, index) => (
               <div className='rounded-md overflow-hidden' key={index} onClick={() => handleImageClick(item)}>
-                <img src={item} alt="Product" className="cursor-pointer" />
+                <Image  src={item} alt="Product" className="cursor-pointer" />
+               
               </div>
             ))
           ) : (
@@ -65,7 +66,8 @@ const Productdetails1 = () => {
         </div>
         <div className='w-96 singleimgdiv'>
           {selectedImage && (
-            <img src={selectedImage} className='singleimg' alt={products123.product_title} />
+            <Image src={selectedImage} className='singleimg' alt={products123.product_title}/>
+
           )}
         </div>
         <div className='singleitems flex flex-col p-3 pt-10 px-5 gap-2'>

@@ -7,6 +7,7 @@ import { GoBell } from "react-icons/go";
 import { useSearch } from './Searching';
 import { useRouter } from 'next/navigation';
 import { useCart } from './Cartcontext';
+import Image from 'next/image';
 
 
 const Navbar = () => {
@@ -67,7 +68,7 @@ const homeback=()=>{
                 <div className='second-nav-div-inner'>
                     <span className='cursor-pointer' onClick={(phones)=>fetchProducts(phones)}>SHOP</span>
                     <span className='cursor-pointer'>ESSENTIALS</span>
-                    <img  className=" cursor-pointer"src='/images/maccicon.png' onClick={homeback} width={160} />
+                    <Image  className=" cursor-pointer"src='/images/maccicon.png ' alt='maccicon1' onClick={homeback} width={160} />
                     <span className=" cursor-pointer" onClick={bestsellersdata}>BEST SELLERS</span>
                     <span className=" cursor-pointer">ABOUT US</span>
                     <div className='flex items-center gap-7'>  

@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useSearch } from './Searching';
+import Image from 'next/image';
 
 const Randomitemsdisplay = () => {
   const { fetchProducts1}=useSearch()
@@ -19,7 +20,7 @@ console.log(randomdata)
             
             <div className='products-box flex flex-col gap-4 rounded-md items-center py-5 px-3' onClick={()=>{fetchProducts1(item.asin)}}  key={item.asin}>
                   <div className='products-imgdiv'>
-                    <img src={item.product_photo} width={150} alt={item.product_title} />
+                    <Image src={item.product_photo} width={150} alt={item.product_title} />
                   </div>
                   <p className='overflow-hidden h-11 w-60 text-center'>{item.product_title}</p>
                 </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-
+import Image from 'next/image';
 const Topdeals = () => {
   const [tosell, settopsell] = useState([]);
   const scrollRef = useRef(null);
@@ -45,7 +45,7 @@ const topdealslice=topdeal.slice(0,7)
     <>
       <div className='flex mt-10 justify-between mb-8'>
       <div>
-          <img src='/images/topdeal.png' width={400} alt='Top Selling Products' />
+          <Image src='/images/topdeal.png' width={400} alt='Top Selling Products' />
         </div>
         <div>
         <div className='flex items-center justify-between  pr-32'>  <h1 className='font-bold text-3xl px-15'>
@@ -63,7 +63,7 @@ const topdealslice=topdeal.slice(0,7)
                 topdealslice.map(product => (
                   <div key={product.deal_id} className='flex-none p-2 topseelbo  border w-[18vw]'>
                     <div className=' flex flex-col gap-6 items-center rounded-md p-2'>
-                   < div>  <img src={product.deal_photo} alt={product.title} className='w-[10vw] h-[31vh]' /></div> 
+                   < div>  <Image src={product.deal_photo} alt={product.title} className='w-[10vw] h-[31vh]' /></div> 
                        <p className='text-center font-semibold topselltitle'>{product.deal_title}</p> 
                     </div>
                   

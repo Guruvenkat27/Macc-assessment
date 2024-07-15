@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCart } from './Cartcontext';
 import { useRouter } from 'next/navigation';
-
+import Image from 'next/image';
 const Cart = () => {
     const { cart, removeFromCart } = useCart();
     const [isMounted, setIsMounted] = useState(false);
@@ -42,7 +42,7 @@ const router=useRouter()
                         {cart.map((item) => (
                             <li key={item.asin} className='border rounded-md py-2 px-2 gap-6 pr-6 flex items-center'>
                                 <div className='w-[9vw] h-[20vh] rounded-md border'>
-                                    <img src={item.product_photo} className='w-[100%] h-[100%]' alt={item.product_title} />
+                                    <Image src={item.product_photo} className='w-[100%] h-[100%]' alt={item.product_title} />
                                 </div>
                                 <p className='w-[37vw]'>{item.product_title}</p>
                                 <span>${item.product_price.replace('$', '')}</span> {/* Show price without dollar sign */}

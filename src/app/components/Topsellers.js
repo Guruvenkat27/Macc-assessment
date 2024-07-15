@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-
+import Image from 'next/image';
 const Topsellers = () => {
   const [tosell, settopsell] = useState([]);
   const scrollRef = useRef(null); // Create a ref to the scroll container
@@ -57,7 +57,7 @@ const Topsellers = () => {
                 topsell.map(product => (
                   <div key={product.seller_id} className='flex-none p-2 topseelbo  border w-[18vw]'>
                     <div className=' flex flex-col gap-6 items-center rounded-md p-2'>
-                   < div>  <img src={product.product_photo} alt={product.title} className='w-[10vw] h-[31vh]' /></div>
+                   < div>  <Image src={product.product_photo} alt={product.title} className='w-[10vw] h-[31vh]' /></div>
                       <p className='text-center font-semibold topselltitle'>{product.product_title}</p>
                     </div>
                   
@@ -76,7 +76,7 @@ const Topsellers = () => {
           </div>
         </div>
         <div>
-          <img src='/images/topsell.png' width={400} alt='Top Selling Products' />
+          <Image src='/images/topsell.png' width={400} alt='Top Selling Products' />
         </div>
       </div>
     </>

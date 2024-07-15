@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import Sucecesful from './Sucecesful';
+import Image from 'next/image';
 
 const PaymentBox = () => {
   const [selectedPayment, setSelectedPayment] = useState('Debit/Credit Card');
@@ -104,7 +105,7 @@ const PaymentBox = () => {
         </div>
       )}
       <div>
-        <img src='/images/payment.png' width={500} alt="Payment Illustration" />
+        <Image src='/images/payment.png' width={500} alt="Payment Illustration" />
       </div>
     </div>
   );

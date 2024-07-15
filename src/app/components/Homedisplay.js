@@ -1,5 +1,5 @@
 import React from 'react'
-
+import Image from 'next/image'
 const Homedisplay = () => {
   return (
     <div>
@@ -15,7 +15,7 @@ const Homedisplay = () => {
 
 </div>
 <div >
-<img src='/images/coverimg1.png'  className='rounded-lg'width={400}/>
+<Image src='./images/coverimg1.png' alt='coverimg1'  className='rounded-lg'width={400}/>
 </div>
       </div>
     </div>
