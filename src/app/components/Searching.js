@@ -1,0 +1,219 @@
+"use client";
+
+import { useRouter } from 'next/navigation';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+
+const SearchContext = createContext();
+
+export const SearchProvider = ({ children }) => {
+    const router = useRouter()
+    const [searchValue, setSearchValue] = useState('');
+
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+    
+    const fetchProducts = async (value) => {
+        setLoading(true);
+        setError(null);
+
+        const url = `https://real-time-amazon-data.p.rapidapi.com/search?query=${value}&page=1&country=US&sort_by=RELEVANCE&product_condition=ALL`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '3d6069430cmsh27fcad427a8d699p121081jsn7bea68a551f9',
+                'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+            }
+        };
+        
+      
+
+        try {
+            const response = await fetch(url, options);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const result = await response.json();
+            const fetchedProducts = result.data.products;
+localStorage.setItem("product",JSON.stringify(fetchedProducts))
+getRandomItems(items, 4)
+            setProducts(fetchedProducts);
+        
+            
+                router.push("/products");
+            
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+function getRandomItems(array, numItems) {
+    const shuffled = array.sort(() => 0.5 - Math.random());
+     const shuffle=shuffled.slice(0, numItems);
+     localStorage.setItem("randomitems" ,JSON.stringify(shuffle))
+  }
+  
+
+
+  
+    const fetchProducts1 = async (value) => {
+        setLoading(true);
+        setError(null);
+
+        const url = `https://real-time-amazon-data.p.rapidapi.com/product-offers?asin=${value}&country=US&limit=100&page=1`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '3d6069430cmsh27fcad427a8d699p121081jsn7bea68a551f9',
+                'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+            }
+        };
+        
+        try {
+            const response = await fetch(url, options);
+        
+
+       
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const result = await response.json();
+            const {data}= result;
+localStorage.setItem("product12",JSON.stringify(data))
+var allproducts=JSON.parse(localStorage.getItem("product"))
+console.log(allproducts)
+getRandomItems(allproducts, 4)
+
+        router.push(`/products/${data.asin}`)
+           
+        } catch (error) {
+            setError(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+
+  
+
+
+    const fetchProducts2 = async (value) => {
+       
+        setLoading(true);
+        setError(null);
+    
+        const url = `https://real-time-amazon-data.p.rapidapi.com/product-offers?asin=${value}&country=US&limit=100&page=1`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': '3d6069430cmsh27fcad427a8d699p121081jsn7bea68a551f9', 
+                'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+            }
+        };
+        
+        try {
+            const response = await fetch(url, options);
+    
+            if (!response.ok) {
+                throw new Error('Failed to fetch product data. Please try again later.');
+            }
+    
+            const result = await response.json();
+            const { data } = result;
+    
+            if (data && data.asin) {
+               
+                localStorage.setItem("productsinglebest", JSON.stringify(data));
+    
+               
+                const allProducts = JSON.parse(localStorage.getItem("productbest")) || [];
+                console.log(allProducts);
+    
+               
+                getRandomItems(allProducts, 4);
+    
+                
+                router.push(`/bestsellers/${data.asin}`);
+            } else {
+                throw new Error('No product data found.');
+            }
+    
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+    
+
+const fetchingcategories= async ()=>{
+    const url = 'https://real-time-amazon-data.p.rapidapi.com/product-category-list?country=IN';
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': '3d6069430cmsh27fcad427a8d699p121081jsn7bea68a551f9',
+            'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+        }
+    };
+    
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        localStorage.setItem("categories",JSON.stringify(result.data))
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+const bestsellersdata= async ()=>{
+    const url = 'https://real-time-amazon-data.p.rapidapi.com/best-sellers?category=electronics&type=BEST_SELLERS&page=1&country=US';
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': '3d6069430cmsh27fcad427a8d699p121081jsn7bea68a551f9',
+            'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
+        }
+    };
+    
+    try {
+        const response = await fetch(url, options);
+        const result = await response.json();
+        console.log(result);
+        localStorage.setItem("productbest",JSON.stringify(result.data))
+        router.push("/bestsellers")
+    } catch (error) {
+        console.error(error);
+    }
+}
+    
+
+
+
+
+
+    // useEffect(() => {
+    //     if (searchValue) {
+    //         fetchProducts(searchValue);
+    //     }
+    // }, [searchValue]); // Only triggers on searchValue change
+
+    return (
+        <SearchContext.Provider value={{ searchValue,fetchProducts2 ,bestsellersdata,setSearchValue,fetchingcategories, fetchProducts1 ,fetchProducts ,products, loading, error }}>
+            {children}
+        </SearchContext.Provider>
+    );
+};
+
+export const useSearch = () => {
+    const context = useContext(SearchContext);
+    if (!context) {
+        throw new Error('useSearch must be used within a SearchProvider');
+    }
+    return context;
+};
