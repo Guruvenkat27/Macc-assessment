@@ -35,7 +35,7 @@ somedataslice.length>0?(somedataslice.map((item)=>{
         <>
         <div className='border py-5 px-2 rounded-md'>
 
-<div className='w-[17.3vw] h-[32vh]'><Image src={item.deal_photo} className='w-[100%] h-[100%]'/></div>
+<div className='w-[17.3vw] h-[32vh]'><Image src={item.deal_photo} className='w-[100%] h-[100%]' alt='topsellimage'/></div>
       <p className='overflow-hidden h-[8vh] p-3'>{item.deal_title}</p>      
         </div>
         

@@ -14,7 +14,7 @@ const Sucecesful = () => {
       <div className='bg-white w-[25vw]'>
         <div className='w-[100%] h[10vh]'>
 
-<Image src='/images/shopping-mall.webp' className='w[100%] h-[100%]' />
+<Image src='/images/shopping-mall.webp' alt='shopping mall' className='w[100%] h-[100%]' />
 
             </div>
             <div className='flex flex-col gap-3 items-center p-5'>

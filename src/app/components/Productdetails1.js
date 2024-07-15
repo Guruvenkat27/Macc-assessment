@@ -1,6 +1,6 @@
 "use client";
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'next/navigation';
 import { useCart } from './Cartcontext';
 import { IoIosArrowDown } from "react-icons/io";
@@ -8,17 +8,18 @@ import { GiCancel } from "react-icons/gi";
 
 const Productdetails1 = () => {
   const { asin } = useParams();
-  const products123 = JSON.parse(localStorage.getItem("product12")) || {};
+  const storedProduct = JSON.parse(localStorage.getItem("product12")) || {};
   const { addToCart } = useCart();
 
+  const products123 = useMemo(() => storedProduct, [storedProduct]);
   const [selectedImage, setSelectedImage] = useState(products123.product_photo);
   const [isAdded, setIsAdded] = useState(false);
 
   useEffect(() => {
     if (products123.product_photos && products123.product_photos.length > 0) {
-      setSelectedImage(products123.product_photos[0]); 
+      setSelectedImage(products123.product_photos[0]);
     }
-  }, [products123]);
+  }, [products123.product_photos]);
 
   if (!asin) {
     return <p>Loading...</p>;
@@ -38,7 +39,7 @@ const Productdetails1 = () => {
   };
 
   const handleImageClick = (image) => {
-    setSelectedImage(image); 
+    setSelectedImage(image);
   };
 
   return (
@@ -56,8 +57,7 @@ const Productdetails1 = () => {
           {Array.isArray(products123.product_photos) && products123.product_photos.length > 0 ? (
             products123.product_photos.map((item, index) => (
               <div className='rounded-md overflow-hidden' key={index} onClick={() => handleImageClick(item)}>
-                <Image  src={item} alt="Product" className="cursor-pointer" />
-               
+                <Image src={item} alt="Product" className="cursor-pointer" />
               </div>
             ))
           ) : (
@@ -66,8 +66,7 @@ const Productdetails1 = () => {
         </div>
         <div className='w-96 singleimgdiv'>
           {selectedImage && (
-            <Image src={selectedImage} className='singleimg' alt={products123.product_title}/>
-
+            <Image src={selectedImage} className='singleimg' alt={products123.product_title} />
           )}
         </div>
         <div className='singleitems flex flex-col p-3 pt-10 px-5 gap-2'>
@@ -80,7 +79,7 @@ const Productdetails1 = () => {
             <button className='text-white'>Save for later</button>
           </div>
           <div className='sigledes mt-5 overflow-hidden'>{products123.product_description}</div>
-          <div className='border h-[6.5vh] flex items-center justify-between px-[18px] pl-[40%] border-gray-300'>RETURN POLICY  <IoIosArrowDown /> </div>
+          <div className='border h-[6.5vh] flex items-center justify-between px-[18px] pl-[40%] border-gray-300'>RETURN POLICY <IoIosArrowDown /></div>
           <div className='border h-[6.5vh] flex items-center justify-between px-[18px] pl-[40%] border-gray-300'>CITIZEN POLICY <IoIosArrowDown /></div>
         </div>
       </div>
