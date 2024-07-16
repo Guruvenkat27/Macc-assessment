@@ -2,32 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { useCart } from './Cartcontext';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+
 const Cart = () => {
     const { cart, removeFromCart } = useCart();
     const [isMounted, setIsMounted] = useState(false);
-const router=useRouter()
+    const router = useRouter();
+
     useEffect(() => {
         setIsMounted(true);
     }, []);
 
     const calculateTotalPrice = () => {
         return cart.reduce((total, item) => {
-            const priceString = item.product_price || '0'; // Default to '0' if undefined
-            const price = parseFloat(priceString.replace('$', '').trim()); // Remove '$' and convert to float
-            return total + (isNaN(price) ? 0 : price); // Ensure price is valid
-        }, 0).toFixed(2); // Format to 2 decimal places
+            const priceString = item.product_price || '0'; 
+            const price = parseFloat(priceString.replace('$', '').trim());
+            return total + (isNaN(price) ? 0 : price);
+        }, 0).toFixed(2);
     };
 
     if (!isMounted) return null;
 
-
-    const buynow=()=>{
-        if(cart != []){
-            const total=calculateTotalPrice()
-            localStorage.setItem("totalpriceitem",JSON.stringify(total))
-            router.push("/checkout")
+    const buynow = () => {
+        if (cart.length > 0) { 
+            const total = calculateTotalPrice();
+            localStorage.setItem("totalpriceitem", JSON.stringify(total));
+            router.push("/checkout");
         }
-    }
+    };
 
     return (
         <div className='flex items-center gap-4 flex-col mt-7'>
@@ -42,10 +43,10 @@ const router=useRouter()
                         {cart.map((item) => (
                             <li key={item.asin} className='border rounded-md py-2 px-2 gap-6 pr-6 flex items-center'>
                                 <div className='w-[9vw] h-[20vh] rounded-md border'>
-                                    <Image src={item.product_photo} className='w-[100%] h-[100%]' alt={item.product_title} />
+                                    <Image src={item.product_photo} className='w-[100%] h-[100%]' width={100} height={100} alt={item.product_title} />
                                 </div>
                                 <p className='w-[37vw]'>{item.product_title}</p>
-                                <span>${item.product_price.replace('$', '')}</span> {/* Show price without dollar sign */}
+                                <span>${item.product_price.replace('$', '')}</span> 
                                 <button className='bg-red-500 rounded-md w-[8vw] py-1 text-white font-bold' onClick={() => removeFromCart(item.asin)}>Remove</button>
                             </li>
                         ))}
@@ -53,7 +54,9 @@ const router=useRouter()
                     <div className='flex items-center font-bold justify-end w-[55vw]'>
                         Total Price: ${calculateTotalPrice()}
                     </div>
-                    <div className='flex items-center justify-end w-[62vw]'><button className='font-bold bg-red-500  text-white w-[15vw] h-[6vh]' onClick={buynow}>BUY NOW</button></div>
+                    <div className='flex items-center justify-end w-[62vw]'>
+                        <button className='font-bold bg-red-500 text-white w-[15vw] h-[6vh]' onClick={buynow}>BUY NOW</button>
+                    </div>
                 </>
             )}
         </div>

@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSearch } from './Searching';
 import Image from 'next/image';
 
 const Bestsellerpage = () => {
-
-    
     const { fetchProducts2 } = useSearch();
-    const bestsellingdata = JSON.parse(localStorage.getItem("bestselldataa")) || { best_sellers: [] }; // Default to empty array
+    const [bestsellingdata, setBestsellingdata] = useState({ best_sellers: [] });
+
+    useEffect(() => {
+        const storedData = localStorage.getItem("bestselldataa");
+        if (storedData) {
+            setBestsellingdata(JSON.parse(storedData));
+        }
+    }, []);
 
     const categories = [
         { id: 1, name: 'Electronics' },
@@ -42,7 +47,7 @@ const Bestsellerpage = () => {
                     {bestsellingdata.best_sellers.map((item) => (
                         <div key={item.asin} className='flex flex-col bestsingle items-center' onClick={() => fetchProducts2(item.asin)}>
                             <div className='h-[33vh] w-[100%]'>
-                                <Image src={item.product_photo} className='w-[100%] h-[100%]' alt={item.product_title} />
+                                <Image src={item.product_photo} width={100} height={100} className='w-[100%] h-[100%]' alt={item.product_title} />
                             </div>
                             <p className="mt-4 overflow-hidden px-3 h-[7vh]">{item.product_title}</p>
                         </div>

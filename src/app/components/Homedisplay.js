@@ -15,7 +15,7 @@ const Homedisplay = () => {
 
 </div>
 <div >
-<Image src='./images/coverimg1.png' alt='coverimg1'  className='rounded-lg'width={400}/>
+<Image src='/images/coverimg1.png' alt='coverimg1'  className='rounded-lg' width={400} height={300}/>
 </div>
       </div>
     </div>

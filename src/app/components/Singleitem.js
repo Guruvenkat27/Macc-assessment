@@ -56,7 +56,7 @@ const ProductDetails = () => {
           {Array.isArray(products123.product_photos) && products123.product_photos.length > 0 ? (
             products123.product_photos.map((item, index) => (
               <div className='rounded-md overflow-hidden' key={index} onClick={() => handleImageClick(item)}>
-                <Image src={item} alt="Product" className="cursor-pointer" />
+                <Image src={item} alt="Product" width={100} height={100} className="cursor-pointer" />
               </div>
             ))
           ) : (

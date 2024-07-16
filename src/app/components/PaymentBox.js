@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoIosArrowBack } from "react-icons/io";
 import Sucecesful from './Sucecesful';
 import Image from 'next/image';
@@ -11,18 +11,35 @@ const PaymentBox = () => {
   const [cvv, setCvv] = useState('');
   const [isSuccessful, setIsSuccessful] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [price, setPrice] = useState(null); 
+
+  useEffect(() => {
+   
+    const storedPrice = localStorage.getItem("totalpriceitem");
+    if (storedPrice) {
+      setPrice(JSON.parse(storedPrice));
+    }
+  }, []);
 
   const handlePaymentChange = (e) => {
     setSelectedPayment(e.target.value);
   };
 
-  const handleProceedToPay = () => {
- 
+  const validateCardDetails = () => {
     if (!cardHolderName || !cardNumber || !expiryDate || !cvv) {
-      setErrorMessage('Please fill in all fields.');
+      return 'Please fill in all fields.';
+    }
+
+    return '';
+  };
+
+  const handleProceedToPay = () => {
+    const validationError = validateCardDetails();
+    if (validationError) {
+      setErrorMessage(validationError);
       return;
     }
-    
+
     const paymentDetails = {
       selectedPayment,
       cardHolderName,
@@ -30,59 +47,60 @@ const PaymentBox = () => {
       expiryDate,
       cvv
     };
+    
+ 
     localStorage.setItem('paymentDetails', JSON.stringify(paymentDetails));
     
     setIsSuccessful(true);
   };
 
-  const price = JSON.parse(localStorage.getItem("totalpriceitem"));
-
   return (
     <div className='flex items-start justify-center gap-36 mt-5 mb-8'>
       {isSuccessful ? (
-        <div><Sucecesful /></div>
+        <Sucecesful />
       ) : (
         <div className='grid gap-3'>
           <h1 className='font-bold text-3xl'>PAYMENT</h1>
           <div className='mt-4 border payment-inptbox h-36 flex flex-col justify-center gap-1'>
-            <span className='px-5 border-gray-500 border-opacity-50 border-b flex items-center gap-3 py-1'>
-              <input type='radio' value='Bitcoin' checked={selectedPayment === 'Bitcoin'} onChange={handlePaymentChange} />
-              <label>Bitcoin</label>
-            </span>
-            <span className='px-5 border-gray-500 border-opacity-50 border-b flex items-center gap-3 py-1'>
-              <input type='radio' value='Apple Wallet' checked={selectedPayment === 'Apple Wallet'} onChange={handlePaymentChange} />
-              <label>Apple Wallet</label>
-            </span>
-            <span className='px-5 border-gray-500 border-opacity-50 border-b flex items-center gap-3 py-1'>
-              <input type='radio' value='Paypal' checked={selectedPayment === 'Paypal'} onChange={handlePaymentChange} />
-              <label>Paypal</label>
-            </span>
-            <span className='px-5 flex items-center gap-3'>
-              <input type='radio' value='Debit/Credit Card' checked={selectedPayment === 'Debit/Credit Card'} onChange={handlePaymentChange} />
-              <label>Debit/Credit Card</label>
-            </span>
+            {['Bitcoin', 'Apple Wallet', 'Paypal', 'Debit/Credit Card'].map(method => (
+              <span key={method} className='px-5 border-gray-500 border-opacity-50 border-b flex items-center gap-3 py-1'>
+                <input 
+                  type='radio' 
+                  value={method} 
+                  checked={selectedPayment === method} 
+                  onChange={handlePaymentChange} 
+                />
+                <label>{method}</label>
+              </span>
+            ))}
           </div>
           <h3 className='font-bold'>Card Details</h3>
-          {errorMessage && <p className='text-red-500'>{errorMessage}</p>} {/* Error message display */}
+          {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
           <div className='flex flex-col gap-3 paymentinps'>
-            <input  className='px-4'  type='text' 
+            <input 
+              className='px-4' 
+              type='text' 
               placeholder="Enter Card Holder Name" 
               value={cardHolderName} 
               onChange={e => setCardHolderName(e.target.value)} 
             />
-            <input  className='px-4' type='text' 
+            <input 
+              className='px-4' 
+              type='text' 
               placeholder='Enter Card Number' 
               value={cardNumber} 
               onChange={e => setCardNumber(e.target.value)} 
             />
             <span className='flex gap-3'>
-              <input className='px-4' 
+              <input 
+                className='px-4' 
                 type='text' 
-                placeholder='Expiry Date' 
+                placeholder='Expiry Date (MM/YY)' 
                 value={expiryDate} 
                 onChange={e => setExpiryDate(e.target.value)} 
               />
-              <input className='px-4' 
+              <input 
+                className='px-4' 
                 type='text' 
                 placeholder='CVV'
                 value={cvv} 
@@ -105,7 +123,7 @@ const PaymentBox = () => {
         </div>
       )}
       <div>
-        <Image src='/images/payment.png' width={500} alt="Payment Illustration" />
+        <Image src='/images/payment.png' width={500} height={100} alt="Payment Illustration" />
       </div>
     </div>
   );

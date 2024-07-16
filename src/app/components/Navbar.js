@@ -9,39 +9,37 @@ import { useRouter } from 'next/navigation';
 import { useCart } from './Cartcontext';
 import Image from 'next/image';
 
-
 const Navbar = () => {
-    const router=useRouter()
+    const router = useRouter();
     const [isVisible, setIsVisible] = useState(false);
-    const { searchValue, setSearchValue,bestsellersdata ,fetchProducts } = useSearch();
-    
-    const {itemCount}=useCart()
+    const { searchValue, setSearchValue, bestsellersdata, fetchProducts } = useSearch();
+    const { itemCount } = useCart();
 
-    const SearchInput = () => {
+    const toggleSearchInput = () => {
         setIsVisible(prev => !prev);
     };
 
-    const handleKeyDown =  (event) => {
+    const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             console.log('Searching for:', searchValue);
-            
-                 fetchProducts(searchValue);
-             
-                setSearchValue('');
-                setIsVisible(false);
-                
-            
+            fetchProducts(searchValue);
+            setSearchValue('');
+            setIsVisible(false);
         }
     };
 
-    const cartpage=()=>{
-        router.push("/cart")
-    }
-    
+    const goToCart = () => {
+        router.push("/cart");
+    };
 
-const homeback=()=>{
-    router.push("/home")
-}
+    const goToHome = () => {
+        router.push("/home");
+    };
+
+    const handleBestSellersClick = () => {
+        bestsellersdata(); 
+    };
+
     return (
         <>
             <nav className='first-nav'>
@@ -53,7 +51,7 @@ const homeback=()=>{
             </nav>
             <div className='second-nav-div'>
                 <div className='flex items-center gap-2 searchdiv w-60 h-12'>
-                    <IoIosSearch className='text-3xl' onClick={SearchInput} />
+                    <IoIosSearch className='text-3xl cursor-pointer' onClick={toggleSearchInput} aria-label="Search" />
                     {isVisible && (
                         <input 
                             type='search' 
@@ -66,15 +64,25 @@ const homeback=()=>{
                     )}
                 </div>
                 <div className='second-nav-div-inner'>
-                    <span className='cursor-pointer' onClick={(phones)=>fetchProducts(phones)}>SHOP</span>
+                    <span className='cursor-pointer' onClick={() => fetchProducts('phones')}>SHOP</span>
                     <span className='cursor-pointer'>ESSENTIALS</span>
-                    <Image  className=" cursor-pointer"src='/images/maccicon.png ' alt='maccicon1' onClick={homeback} width={160} />
-                    <span className=" cursor-pointer" onClick={bestsellersdata}>BEST SELLERS</span>
-                    <span className=" cursor-pointer">ABOUT US</span>
+                    <Image 
+                        className="cursor-pointer" 
+                        src='/images/maccicon.png' 
+                        alt='Maccicon' 
+                        onClick={goToHome} 
+                        width={160} 
+                        height={100} 
+                    />
+                    <span className="cursor-pointer" onClick={handleBestSellersClick}>BEST SELLERS</span>
+                    <span className="cursor-pointer">ABOUT US</span>
                     <div className='flex items-center gap-7'>  
-                        <CiUser className='text-2xl' />
-                        <GoBell className='text-2xl'/>
-                       <span className='relative' onClick={cartpage}> <LiaShoppingBagSolid className='text-2xl' /> <span className='absolute left-[60%] top-0 bg-red-600 rounded text-white text-xs px-1'>{itemCount}</span></span>
+                        <CiUser className='text-2xl cursor-pointer' aria-label="User Account" />
+                        <GoBell className='text-2xl cursor-pointer' aria-label="Notifications" />
+                        <span className='relative' onClick={goToCart}>
+                            <LiaShoppingBagSolid className='text-2xl cursor-pointer' aria-label="Shopping Cart" />
+                            <span className='absolute left-[60%] top-0 bg-red-600 rounded text-white text-xs px-1'>{itemCount}</span>
+                        </span>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ const Footer = () => {
     <div>
       <div className='flex items-start justify-between px-20 py-11 relative bottom-0'>
         <div>
-          <Image src='/images/maccicon.png' alt='maccicon' width={200} />
+          <Image src='/images/maccicon.png' alt='maccicon' width={200} height={150} />
         </div>
         <div className='grid gap-2'>
           <span className='text-gray-700'>Home</span>

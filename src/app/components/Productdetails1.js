@@ -10,13 +10,15 @@ const Productdetails1 = () => {
   const { asin } = useParams();
   const { addToCart } = useCart();
 
-
   const products123 = useMemo(() => {
-    const storedProduct = JSON.parse(localStorage.getItem("product12"));
-    return storedProduct || {};
+    if (typeof window !== 'undefined') {
+      const storedProduct = localStorage.getItem("product12");
+      return storedProduct ? JSON.parse(storedProduct) : {};
+    }
+    return {};
   }, []); 
 
-  const [selectedImage, setSelectedImage] = useState(products123.product_photo);
+  const [selectedImage, setSelectedImage] = useState('');
   const [isAdded, setIsAdded] = useState(false);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ const Productdetails1 = () => {
           {Array.isArray(products123.product_photos) && products123.product_photos.length > 0 ? (
             products123.product_photos.map((item, index) => (
               <div className='rounded-md overflow-hidden' key={index} onClick={() => handleImageClick(item)}>
-                <Image src={item} alt="Product" className="cursor-pointer" />
+                <Image src={item} alt="Product" width={100} height={100} className="cursor-pointer" />
               </div>
             ))
           ) : (
@@ -70,7 +72,7 @@ const Productdetails1 = () => {
         </div>
         <div className='w-96 singleimgdiv'>
           {selectedImage && (
-            <Image src={selectedImage} className='singleimg' alt={products123.product_title} />
+            <Image src={selectedImage} className='singleimg' width={100} height={100}  alt={products123.product_title} />
           )}
         </div>
         <div className='singleitems flex flex-col p-3 pt-10 px-5 gap-2'>
