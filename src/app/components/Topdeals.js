@@ -10,7 +10,7 @@ const Topdeals = () => {
     const options = {
       method: 'GET',
       headers: {
-        'x-rapidapi-key': '3d6069430cmsh27fcad427a8d699p121081jsn7bea68a551f9', 
+        'x-rapidapi-key': 'efb2ba6220msh1906057773d330bp1fd202jsn7b72e308bc9c', 
         'x-rapidapi-host': 'real-time-amazon-data.p.rapidapi.com'
       }
     };

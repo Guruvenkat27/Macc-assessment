@@ -33,7 +33,7 @@ const Navbar = () => {
     };
 
     const goToHome = () => {
-        router.push("/home");
+        router.push("/");
     };
 
     const handleBestSellersClick = () => {
